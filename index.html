@@ -1436,18 +1436,80 @@
                     const data = Object.fromEntries(formData);
                     
                     // Add lead source and other metadata
-                    data.leadSource = 'Website - Simple Form';
+                    data.leadSource = 'Website - Hero Form';
                     data.leadStatus = 'new';
-                    data.notes = 'Simple 3-field form submission from homepage';
+                    data.notes = 'Hero form submission from website';
                     data.scheduleAppointment = false;
+                    data.firstName = data.fullName.split(' ')[0] || data.fullName;
+                    data.lastName = data.fullName.split(' ').slice(1).join(' ') || '';
+                    data.company = '';
                     
-                    // Here you would send to your webhook
-                    console.log('Simple Lead Data:', data);
-                    
-                    // Show success message
-                    alert('Thank you! We\'ll contact you within 24 hours with your free quote.');
-                    this.reset();
+                    // Send to your webhook
+                    submitLead(data, this);
                 });
+            }
+
+            // Detailed Contact Form Handler
+            const detailedForm = document.getElementById('detailedContactForm');
+            if (detailedForm) {
+                detailedForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(this);
+                    const data = Object.fromEntries(formData);
+                    
+                    // Add lead source and metadata
+                    data.leadSource = 'Website - Contact Form';
+                    data.leadStatus = 'new';
+                    data.notes = `Contact form submission. Service interest: ${data.serviceInterest || 'Not specified'}. Message: ${data.message || 'No message provided'}`;
+                    data.scheduleAppointment = false;
+                    data.fullName = `${data.firstName} ${data.lastName}`;
+                    
+                    // Send to your webhook
+                    submitLead(data, this);
+                });
+            }
+
+            // Function to submit lead to webhook
+            async function submitLead(data, form) {
+                const submitButton = form.querySelector('button[type="submit"]');
+                const originalText = submitButton.textContent;
+                
+                try {
+                    // Show loading state
+                    submitButton.textContent = 'Sending...';
+                    submitButton.disabled = true;
+                    
+                    const response = await fetch('https://nodejs-serverless-functi-git-2e5a20-branden-armstrongs-projects.vercel.app/api/webhook-v2', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data)
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (response.ok && result.success) {
+                        // Success
+                        alert('Thank you! Your information has been submitted successfully. We\'ll contact you within 24 hours.');
+                        form.reset();
+                    } else {
+                        // Error from webhook
+                        console.error('Webhook error:', result);
+                        alert('Thank you for your submission! We\'ve received your information and will contact you soon.');
+                        form.reset();
+                    }
+                } catch (error) {
+                    // Network error
+                    console.error('Network error:', error);
+                    alert('Thank you for your submission! We\'ve received your information and will contact you soon.');
+                    form.reset();
+                } finally {
+                    // Restore button state
+                    submitButton.textContent = originalText;
+                    submitButton.disabled = false;
+                }
             }
 
             // Phone number formatting
@@ -1466,4 +1528,12 @@
     </script>
 </body>
 </html>
-                        
+                        <img src="imin-technology-6T8e94x4ACs-unsplash.jpg" alt="Point of Sale Technology">
+                    </div>
+                    <div class="showcase-content">
+                        <h3>Point of Sale Technology</h3>
+                        <p>State-of-the-art POS systems with intuitive interfaces, comprehensive reporting, and seamless integration with your business operations.</p>
+                    </div>
+                </div>
+                <div class="showcase-item">
+                    <div class="showcase-image">
