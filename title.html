@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title Company Payment Processing | West Texas Business Solutions</title>
+    <meta name="description" content="ACH, wire transfer, and escrow disbursement processing built for title companies. Save 40%+ on payment processing fees. West Texas Business Solutions.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header — identical to main site */
+        .header {
+            background: #000;
+            padding: 0.1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo img {
+            height: 113px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ff0000;
+        }
+
+        .nav-links a.active-page {
+            color: #ff0000;
+            border-bottom: 2px solid #ff0000;
+            padding-bottom: 2px;
+        }
+
+        .phone-number {
+            background: #ff0000;
+            color: white !important;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .phone-number:hover {
+            background: #cc0000;
+            color: white !important;
+        }
+
+        /* Hero */
+        .hero {
+            background: #000;
+            color: white;
+            padding: 80px 0 0;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(255,0,0,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 30%, rgba(0,255,0,0.04) 0%, transparent 50%);
+            z-index: 1;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 8rem 2rem 5rem;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            font-size: 3.2rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            line-height: 1.15;
+        }
+
+        .hero-content h1 .accent-red { color: #ff0000; }
+        .hero-content h1 .accent-green { color: #00ff00; }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            color: rgba(255,255,255,0.85);
+            line-height: 1.7;
+            max-width: 560px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            color: white;
+            font-size: 1.6rem;
+            font-weight: 800;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-trust {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-trust span {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .hero-trust span::before {
+            content: "\2713";
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        .title-lead-form {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            color: white;
+        }
+
+        .title-lead-form h3 {
+            text-align: center;
+            font-size: 1.3rem;
+            margin-bottom: 0.4rem;
+            font-weight: bold;
+        }
+
+        .title-lead-form .form-sub {
+            text-align: center;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 1.2rem;
+            line-height: 1.4;
+        }
+
+        .title-form-group { margin-bottom: 0.7rem; }
+
+        .title-form-group input,
+        .title-form-group select {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            background: rgba(255,255,255,0.08);
+            color: white;
+            transition: border-color 0.3s ease;
+        }
+
+        .title-form-group input::placeholder { color: rgba(255,255,255,0.6); }
+
+        .title-form-group select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.6)' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.8rem center;
+            padding-right: 2rem;
+        }
+
+        .title-form-group select option { background: #222; color: #fff; }
+
+        .title-form-group input:focus,
+        .title-form-group select:focus {
+            outline: none;
+            border-color: #ff0000;
+            box-shadow: 0 0 8px rgba(255,0,0,0.25);
+            background: rgba(255,255,255,0.12);
+        }
+
+        .title-btn-submit {
+            background: #ff0000;
+            color: white;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s ease;
+            margin-top: 0.3rem;
+        }
+
+        .title-btn-submit:hover { background: #cc0000; }
+
+        .form-privacy {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            margin-top: 0.6rem;
+        }
+
+        .pain-points { padding: 80px 0; background: #fff; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+        .section-header { text-align: center; margin-bottom: 3.5rem; }
+        .section-header h2 { font-size: 2.4rem; color: #111; margin-bottom: 1rem; font-weight: bold; }
+        .section-header p { font-size: 1.15rem; color: #666; max-width: 640px; margin: 0 auto; line-height: 1.6; }
+
+        .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+
+        .pain-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 2.2rem;
+            border-left: 4px solid #ff0000;
+            transition: all 0.3s ease;
+        }
+
+        .pain-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.1); }
+        .pain-card .pain-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+        .pain-card h3 { font-size: 1.2rem; color: #111; margin-bottom: 0.8rem; font-weight: 700; }
+        .pain-card p { color: #555; font-size: 1rem; line-height: 1.6; }
+
+        .savings-section { padding: 80px 0; background: #000; color: white; position: relative; }
+        .savings-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at 50% 50%, rgba(255,0,0,0.06) 0%, transparent 70%); }
+        .savings-inner { position: relative; z-index: 2; }
+        .savings-hero { text-align: center; margin-bottom: 3.5rem; }
+        .savings-number { font-size: 6rem; font-weight: 900; color: #00ff00; line-height: 1; margin-bottom: 0.5rem; letter-spacing: -3px; }
+        .savings-label { font-size: 1.4rem; color: rgba(255,255,255,0.8); font-weight: 500; }
+
+        .benefits-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+
+        .benefit-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover { border-color: rgba(255,0,0,0.4); background: rgba(255,255,255,0.08); transform: translateY(-4px); }
+        .benefit-card .benefit-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .benefit-card h3 { font-size: 1.15rem; margin-bottom: 0.8rem; font-weight: 700; }
+        .benefit-card p { color: rgba(255,255,255,0.65); font-size: 0.95rem; line-height: 1.6; }
+
+        .how-it-works { padding: 80px 0; background: #f8f9fa; }
+        .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: 3rem; }
+        .step-card { text-align: center; position: relative; }
+        .step-num { width: 56px; height: 56px; background: #ff0000; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 800; margin: 0 auto 1.2rem; }
+        .step-card h3 { font-size: 1.1rem; color: #111; margin-bottom: 0.6rem; font-weight: 700; }
+        .step-card p { color: #666; font-size: 0.95rem; line-height: 1.5; }
+        .step-card::after { content: ''; position: absolute; top: 28px; right: -1rem; width: calc(100% - 56px); height: 2px; background: linear-gradient(90deg, #ff0000, rgba(255,0,0,0.1)); transform: translateX(50%); }
+        .step-card:last-child::after { display: none; }
+
+        .cta-section { padding: 80px 0; background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%); color: white; text-align: center; }
+        .cta-section h2 { font-size: 2.6rem; margin-bottom: 1rem; font-weight: bold; }
+        .cta-section p { font-size: 1.2rem; margin-bottom: 2.5rem; opacity: 0.9; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .cta-row { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+        .cta-btn { padding: 1rem 2.5rem; border-radius: 6px; font-size: 1.1rem; font-weight: 700; text-decoration: none; transition: all 0.3s ease; display: inline-block; }
+        .cta-btn-white { background: white; color: #cc0000; }
+        .cta-btn-white:hover { background: #f0f0f0; transform: translateY(-2px); }
+        .cta-btn-outline { background: transparent; color: white; border: 2px solid white; }
+        .cta-btn-outline:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+
+        .footer { background: #ff0000; color: white; padding: 60px 0 30px; }
+        .footer-content { max-width: 1200px; margin: 0 auto; padding: 0 2rem; text-align: center; }
+        .footer-links { display: flex; justify-content: center; gap: 3rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        .footer-links a { color: #cbd5e1; text-decoration: none; font-size: 1.1rem; transition: color 0.3s ease; }
+        .footer-links a:hover { color: white; }
+        .footer-text { font-size: 1rem; opacity: 0.8; line-height: 1.6; }
+
+        @media (max-width: 768px) {
+            .header { padding: 0.5rem 0; }
+            .nav-container { flex-direction: column; padding: 0 1rem; gap: 0.5rem; }
+            .logo img { height: 60px; }
+            .nav-links { flex-wrap: wrap; justify-content: center; gap: 1rem; }
+            .nav-links li { font-size: 0.9rem; }
+            .phone-number { padding: 0.5rem 1rem; font-size: 0.9rem; }
+            .hero { padding: 120px 0 60px; min-height: auto; }
+            .hero-container { grid-template-columns: 1fr; gap: 2rem; padding: 0 1rem; text-align: center; }
+            .hero-content { order: 2; }
+            .hero-content h1 { font-size: 2rem; }
+            .hero-subtitle { font-size: 1rem; max-width: 100%; }
+            .hero-badge { font-size: 1.3rem; }
+            .hero-trust { justify-content: center; }
+            .title-lead-form { order: 1; max-width: 100%; margin: 0 1rem; }
+            .pain-grid, .benefits-grid { grid-template-columns: 1fr; }
+            .steps-grid { grid-template-columns: repeat(2, 1fr); }
+            .step-card::after { display: none; }
+            .savings-number { font-size: 4rem; }
+            .section-header h2 { font-size: 1.8rem; }
+            .cta-section h2 { font-size: 2rem; }
+            .footer { padding: 40px 0 20px; }
+            .footer-links { flex-direction: column; gap: 1rem; }
+            .container { padding: 0 1rem; }
+            img { max-width: 100%; height: auto; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="West_Texas_Business_Solutions_logo.png" alt="WTBS Logo">
+                <span style="color: #ff0000;">West Texas Business</span> <span style="color: #00ff00;">Solutions</span>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/#services">Services</a></li>
+                    <li><a href="/title" class="active-page">Title Companies</a></li>
+                    <li><a href="/#industries">Industries</a></li>
+                    <li><a href="/#contact">Contact</a></li>
+                    <li><a href="tel:(806)777-3502" class="phone-number">&#128222; (806) 777-3502</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">Save 40%+ on Processing</div>
+                <h1>Payment Processing <span class="accent-red">Built for</span> <span class="accent-green">Title Companies</span></h1>
+                <p class="hero-subtitle">Your bank is overcharging you on ACH, wires, and escrow disbursements. We built a processing solution specifically for the title industry &mdash; faster funding, lower fees, zero long-term contracts.</p>
+                <div class="hero-trust">
+                    <span>No Contracts</span>
+                    <span>No Termination Fees</span>
+                    <span>Local West Texas Support</span>
+                </div>
+            </div>
+            <div class="title-lead-form">
+                <h3>Get Your Savings Estimate</h3>
+                <p class="form-sub">See how much you can save. We'll run a free cost analysis on your current processing.</p>
+                <form id="titleLeadForm">
+                    <div class="title-form-group"><input type="text" name="fullName" placeholder="Your Name *" required></div>
+                    <div class="title-form-group"><input type="text" name="company" placeholder="Title Company Name *" required></div>
+                    <div class="title-form-group"><input type="tel" name="phone" placeholder="Phone Number *" required></div>
+                    <div class="title-form-group"><input type="email" name="email" placeholder="Email *" required></div>
+                    <div class="title-form-group">
+                        <select name="monthlyClosings">
+                            <option value="">Monthly Closings (approx)</option>
+                            <option value="1-25">1 - 25</option>
+                            <option value="26-75">26 - 75</option>
+                            <option value="76-150">76 - 150</option>
+                            <option value="150+">150+</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="title-btn-submit">Get My Savings Estimate &rarr;</button>
+                    <p class="form-privacy">No obligation. No spam. We respect your time.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="pain-points">
+        <div class="container">
+            <div class="section-header">
+                <h2>Sound Familiar?</h2>
+                <p>Title companies face unique payment headaches that generic processors and banks simply don't understand.</p>
+            </div>
+            <div class="pain-grid">
+                <div class="pain-card"><div class="pain-icon">&#128176;</div><h3>ACH Fees Eating Your Margins</h3><p>Your bank charges premium rates for every ACH disbursement. On 50+ closings a month, those per-transaction fees add up to thousands you're giving away.</p></div>
+                <div class="pain-card"><div class="pain-icon">&#9203;</div><h3>2-3 Day Funding Delays</h3><p>Buyers and sellers expect fast closings. Your processor holds funds for days, creating friction and phone calls your team shouldn't have to handle.</p></div>
+                <div class="pain-card"><div class="pain-icon">&#128181;</div><h3>Wire Transfer Costs Are Insane</h3><p>Incoming and outgoing wire fees from banks add $25-$50+ per wire. On a busy month with multiple transactions per closing, it's a line item you dread.</p></div>
+                <div class="pain-card"><div class="pain-icon">&#128196;</div><h3>Reconciliation is a Nightmare</h3><p>Matching escrow disbursements across multiple accounts, processors, and bank statements wastes hours every week. Your team deserves better tools.</p></div>
+                <div class="pain-card"><div class="pain-icon">&#128274;</div><h3>Locked Into Long Contracts</h3><p>Your current processor has you trapped with early termination fees and rate lock clauses. Switching feels impossible even when the service is poor.</p></div>
+                <div class="pain-card"><div class="pain-icon">&#128222;</div><h3>Can Never Reach a Human</h3><p>When a wire doesn't land or a disbursement fails, you're stuck on hold with a national call center. Nobody knows your name or your business.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="savings-section">
+        <div class="container savings-inner">
+            <div class="savings-hero">
+                <div class="savings-number">40%+</div>
+                <div class="savings-label">Average Savings vs. Bank Processing Fees</div>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card"><div class="benefit-icon">&#9889;</div><h3>Flat-Rate ACH</h3><p>Predictable, low-cost ACH processing &mdash; no tiered pricing games, no hidden assessment fees. One simple rate on every transaction.</p></div>
+                <div class="benefit-card"><div class="benefit-icon">&#128260;</div><h3>Reduced Wire Costs</h3><p>Dramatically lower incoming and outgoing wire fees compared to traditional banks. Keep more margin on every closing.</p></div>
+                <div class="benefit-card"><div class="benefit-icon">&#127760;</div><h3>Zero Platform Fees</h3><p>No monthly platform charges, no annual fees, no gateway costs. You only pay for the transactions you actually process.</p></div>
+                <div class="benefit-card"><div class="benefit-icon">&#128188;</div><h3>Escrow-Ready</h3><p>Built for the title workflow: escrow disbursements, multi-party payoffs, and trust account compliance &mdash; handled natively.</p></div>
+                <div class="benefit-card"><div class="benefit-icon">&#128100;</div><h3>Local Support &mdash; Lubbock, TX</h3><p>Talk to a real person who knows the title business. Same-day responses, in-person meetings, and a team that answers the phone.</p></div>
+                <div class="benefit-card"><div class="benefit-icon">&#128275;</div><h3>No Contracts, Ever</h3><p>Month-to-month. No early termination fees, no rate lock clauses. Stay because the service is great, not because you're stuck.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>How It Works</h2>
+                <p>Switching is simple. Most title companies are fully transitioned in under a week.</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card"><div class="step-num">1</div><h3>Free Cost Analysis</h3><p>Send us a recent processing statement. We'll show you exactly where you're overpaying and what you'll save.</p></div>
+                <div class="step-card"><div class="step-num">2</div><h3>Custom Quote</h3><p>We build a rate package based on your volume &mdash; not a one-size-fits-all sheet. Your rates reflect your business.</p></div>
+                <div class="step-card"><div class="step-num">3</div><h3>Quick Setup</h3><p>We handle onboarding, account setup, and integration with your existing closing workflow. Minimal disruption.</p></div>
+                <div class="step-card"><div class="step-num">4</div><h3>Start Saving</h3><p>Process your first closing and see the difference. Lower fees, faster funding, and a team that picks up the phone.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Stop Overpaying on Every Closing</h2>
+            <p>Join title companies across West Texas who are keeping more of their margin. Get a free, no-obligation savings estimate today.</p>
+            <div class="cta-row">
+                <a href="#" class="cta-btn cta-btn-white" onclick="document.getElementById('titleLeadForm').scrollIntoView({behavior:'smooth'});return false;">Get My Savings Estimate</a>
+                <a href="tel:(806)777-3502" class="cta-btn cta-btn-outline">&#128222; Call (806) 777-3502</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/#services">Services</a>
+                <a href="/title">Title Companies</a>
+                <a href="/#contact">Contact</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            <div class="footer-text">
+                <p>&copy; 2025 West Texas Business Solutions LLC. All rights reserved.</p>
+                <p>Secure Financial Solutions You Can Trust | Lubbock, Texas</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var titleForm = document.getElementById('titleLeadForm');
+        if (titleForm) {
+            titleForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                var rawData = Object.fromEntries(formData);
+                var nameParts = rawData.fullName.trim().split(' ');
+                var firstName = nameParts[0] || '';
+                var lastName = nameParts.slice(1).join(' ') || '';
+                var data = {
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: rawData.email,
+                    phone: rawData.phone,
+                    company: rawData.company || '',
+                    leadSource: 'Website - Title Company Page',
+                    leadStatus: 'new',
+                    notes: 'Title company lead. Monthly closings: ' + (rawData.monthlyClosings || 'Not specified') + '. Interested in ACH/wire processing savings.',
+                    scheduleAppointment: false,
+                    interestedServices: ['title-payment-processing']
+                };
+                submitTitleLead(data, this);
+            });
+        }
+
+        async function submitTitleLead(data, form) {
+            var btn = form.querySelector('button[type="submit"]');
+            var originalText = btn.textContent;
+            try {
+                btn.textContent = 'Sending...';
+                btn.disabled = true;
+                btn.style.opacity = '0.7';
+                var response = await fetch('https://nodejs-serverless-functi-git-2e5a20-branden-armstrongs-projects.vercel.app/api/webhook', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                var result = await response.json();
+                if (response.ok && result.success) {
+                    alert('Thank you! We\'ll run your free cost analysis and contact you within 24 hours.');
+                } else {
+                    alert('Thank you! We\'ve received your information and will contact you soon.');
+                }
+                form.reset();
+            } catch (error) {
+                console.error('Webhook error:', error);
+                alert('Thank you! We\'ve received your information and will contact you soon.');
+                form.reset();
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            }
+        }
+
+        document.querySelectorAll('input[type="tel"]').forEach(function(input) {
+            input.addEventListener('input', function(e) {
+                var value = e.target.value.replace(/\D/g, '');
+                if (value.length >= 6) { value = value.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3'); }
+                else if (value.length >= 3) { value = value.replace(/(\d{3})(\d{3})/, '($1) $2'); }
+                e.target.value = value;
+            });
+        });
+
+        document.querySelectorAll('input[type="email"]').forEach(function(input) {
+            input.addEventListener('blur', function(e) {
+                var email = e.target.value;
+                var isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+                if (email && !isValid) { e.target.style.borderColor = '#ff0000'; e.target.style.boxShadow = '0 0 5px rgba(255,0,0,0.3)'; }
+                else { e.target.style.borderColor = 'rgba(255,255,255,0.25)'; e.target.style.boxShadow = 'none'; }
+            });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+            anchor.addEventListener('click', function(e) {
+                var target = document.querySelector(this.getAttribute('href'));
+                if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+            });
+        });
+    });
+    </script>
+</body>
+</html>
